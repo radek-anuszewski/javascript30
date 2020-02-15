@@ -1,0 +1,29 @@
+.keys {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
+}
+
+.key {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    margin-left: 10px;
+    margin-right: 10px;
+    transition: all .07s ease;
+}
+
+.header {
+    text-align: center;
+    width: 100%;
+}
+
+.playing {
+    border-color: #e0c22a;
+    box-shadow: 1px 1px 23px -1px rgba(224,194,42,1);
+}
