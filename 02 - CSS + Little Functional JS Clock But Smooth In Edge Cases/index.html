@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS + JS Clock</title>
+</head>
+<body>
+
+<div class="clock">
+  <div class="clock__face">
+<!--    https://www.smashingmagazine.com/2016/06/battling-bem-extended-edition-common-problems-and-how-to-avoid-them/-->
+    <div class="hand js-hand--hour"></div>
+    <div class="hand js-hand--min"></div>
+    <div class="hand js-hand--second"></div>
+  </div>
+</div>
+<script>
+  // Needs to be the same as in CSS transform
+  const offset = 90;
+  const handSecond = document.querySelector('.js-hand--second');
+  const handMin = document.querySelector('.js-hand--min');
+  const handHour = document.querySelector('.js-hand--hour');
+  const defaultTransition = 'all 0.05s';
+  const noTransition = 'unset';
+
+  const updateDegrees = element => degrees => {
+    element.style.transform = `rotate(${degrees}deg)`;
+    element.style.transition = degrees === offset? noTransition : defaultTransition;
+  };
+
+  const updateSecondDegrees = updateDegrees(handSecond);
+  const updateMinutesDegrees = updateDegrees(handMin);
+  const updateHoursDegrees = updateDegrees(handHour);
+
+  const setDate = () => {
+
+    const now = new Date();
+    const seconds = now.getSeconds();
+    const secondDegrees = ((seconds / 60)  * 360) + offset;
+    updateSecondDegrees(secondDegrees);
+
+    const minutes = now.getMinutes();
+    const minutesDegrees = ((minutes / 60)  * 360) + offset;
+    updateMinutesDegrees(minutesDegrees);
+
+    const hours = now.getHours();
+    const hoursDegrees = ((hours / 12)  * 360) + offset;
+    updateHoursDegrees(hoursDegrees);
+  };
+
+  setInterval(setDate, 1000);
+
+</script>
+<style>
+  body {
+    margin: 0;
+    font-size: 2rem;
+    display: flex;
+    flex: 1;
+    min-height: 100vh;
+    align-items: center;
+  }
+
+  .clock {
+    width: 30rem;
+    height: 30rem;
+    border: 20px solid white;
+    border-radius: 50%;
+    margin: 50px auto;
+    position: relative;
+    padding: 2rem;
+    box-shadow:
+      0 0 0 4px rgba(0,0,0,0.1),
+      inset 0 0 0 3px #EFEFEF,
+      inset 0 0 10px black,
+      0 0 10px rgba(0,0,0,0.2);
+  }
+
+  .clock__face {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform: translateY(-3px); /* account for the height of the clock hands */
+  }
+
+  .hand {
+    width: 50%;
+    height: 6px;
+    background: black;
+    position: absolute;
+    top: 50%;
+    transform: rotate(90deg);
+    transform-origin: right; /* the same as 100% */
+    transition: all 0.05s;
+    transition-timing-function: cubic-bezier(0.42, 0, 0.12, 1.41);
+  }
+</style>
+</body>
+</html>
