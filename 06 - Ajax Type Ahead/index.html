@@ -28,8 +28,8 @@
     const input = document.querySelector('.search');
     const suggestions = document.querySelector('.suggestions');
 
-    function displayMatches() {
-      const word = this.value;
+    const displayMatches = () => {
+      const word = input.value;
       const filteredCities = findMatches(word);
       const html = filteredCities.map(el => {
         const regex = new RegExp(word, 'gi');
@@ -38,7 +38,7 @@
         return `<li><span class="name">${cityName}, ${stateName}</span><span class="population">${el.population}</span></li>`;
       }).join();
       suggestions.innerHTML = html;
-    }
+    };
 
     input.addEventListener('input', displayMatches);
   }());
